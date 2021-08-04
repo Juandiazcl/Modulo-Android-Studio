@@ -1,0 +1,51 @@
+**** reflexion Spinner muy buena herramienta para listar registro de una bd.
+
+package com.example.producto;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
+
+public class MainActivity2 extends AppCompatActivity {
+    private Spinner sp1;
+    ArrayList<String> listaProductos;
+    ArrayList<Producto> productoslist;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+        sp1=findViewById(R.id.spinner);
+        ArrayAdapter<String> adaptador= new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,listaProductos);
+        consultarListaProductos();
+        sp1.setAdapter(adaptador);
+    }
+    public void consultarListaProductos(){
+        Admindb admin=new Admindb(this,"Productos",null,1);
+        SQLiteDatabase base=admin.getReadableDatabase();
+        Producto p1=new Producto();
+        productoslist=new ArrayList<Producto>();
+        
+
+        Cursor fila=base.rawQuery("select * from producto",null);
+        while(fila.moveToNext()){
+            p1.setCodigo(fila.getInt(0));
+            p1.setNombre(fila.getString(1));
+            p1.setPrecio(fila.getInt(2));
+            productsList.add(p1);
+        }
+    }
+    public void obtenerProductos(){
+    ListaProductos=new ArrayList<String>();
+    for(int i=0; i<productosList.size();i++){
+    listaProductos.add(productosList.get(i)).getCodigo()+" - "
+    +productosList.get(i).getNombre()+" - "+productosList.get(i).getPrecio());
+    }
+    }
+}

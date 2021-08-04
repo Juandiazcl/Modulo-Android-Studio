@@ -1,0 +1,90 @@
+**** reflexion: excelente desafio la app de la camara, avanzamos mucho.
+****
+
+package com.example.appcamara;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+
+import java.io.File;
+
+public class MainActivity extends AppCompatActivity {
+
+    private ImageView imagen1;
+    private EditText et1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        imagen1=(ImageView)findViewById(R.id.imageView);
+        et1=(EditText)findViewById(R.id.editText);
+    }
+
+    public void tomarFoto(View v) {
+        Intent intento1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File foto = new File(getExternalFilesDir(null), et1.getText().toString());
+        intento1.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(foto));
+        startActivity(intento1);
+    }
+
+    public void recuperarFoto(View v) {
+        Bitmap bitmap1 = BitmapFactory.decodeFile(getExternalFilesDir(null)+"/"+et1.getText().toString());
+        imagen1.setImageBitmap(bitmap1);
+    }
+
+    public void ver(View v) {
+        Intent intento1=new Intent(this,Actividad2.class);
+        startActivity(intento1);
+    }
+
+**** Activity 2
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+
+import java.io.File;
+
+public class Actividad2 extends AppCompatActivity {
+
+    private ListView lv1;
+    private ImageView iv1;
+    private String[] archivos;
+    private ArrayAdapter<String> adaptador1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_actividad2);
+
+        File dir=getExternalFilesDir(null);
+        archivos=dir.list();
+        adaptador1=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,archivos);
+        lv1=(ListView)findViewById(R.id.listView1);
+        lv1.setAdapter(adaptador1);
+
+        iv1=(ImageView)findViewById(R.id.imageView1);
+
+        lv1.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                                    long arg3) {
+                Bitmap bitmap1 = BitmapFactory.decodeFile(getExternalFilesDir(null)+"/"+archivos[arg2]);
+                iv1.setImageBitmap(bitmap1);
+            }});
+
+    }
+}}
+

@@ -1,0 +1,33 @@
+**** gran opcion los menus flow, excelente herramienta
+
+package com.example.appmenuflow;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menuflow, menu);
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id=item.getItemId();
+        if(id==R.id.op1){
+            Toast.makeText(this,"Opcion 1 seleccionada",Toast.LENGTH_LONG).show();
+        } else if(id==R.id.op2){
+            Toast.makeText(this,"Opcion 2 seleccionada",Toast.LENGTH_LONG).show();
+        } else if(id==R.id.op3){
+            Toast.makeText(this,"Opcion 3 seleccionada",Toast.LENGTH_LONG).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}

@@ -1,0 +1,41 @@
+***** Personalizando la app crud con mas activities *******
+
+package com.example.producto;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.widget.Spinner;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
+
+public class MainActivity2 extends AppCompatActivity {
+    private Spinner sp1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+        sp1=findViewById(R.id.spinner);
+    }
+    public void consultarListaProductos(){
+        Admindb admin=new Admindb(this,"Productos",null,1);
+        SQLiteDatabase base=admin.getReadableDatabase();
+        Producto p1=new Producto();
+        productoslist=new ArrayList<Producto>();
+
+        Cursor fila=base.rawQuery("select * from producto",null);
+        while(fila.moveToNext()){
+            p1.setCodigo(fila.getInt(0));
+            p1.setNombre(fila.getString(1));
+            p1.setPrecio(fila.getInt(2));
+            productsList.add(p1);
+        }
+    }
+    public void obtenerProductos(){
+        
+    }
+}

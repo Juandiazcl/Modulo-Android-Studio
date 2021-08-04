@@ -1,0 +1,39 @@
+***** reflexion seguimos con el crud en Android Studio, herramienta vital
+**** para el empresariado
+
+public void modificar(View v){
+       Admindb admin= new Admindb(this,"Productos",null,1);
+       SQLiteDatabase base=admin.getWritableDatabase();
+
+       String codigo=edcodigo.getText().toString();
+       String nombre=edcodigo.getText().toString();
+       String precio=edcodigo.getText().toString();
+       if(!codigo.isEmpty() && !nombre.isEmpty() && !precio.isEmpty()){
+           ContentValues modificar= new ContentValues();
+           modificar.put("codigo", codigo);
+           modificar.put("nombre", nombre);
+           modificar.put("precio", precio);
+           base.update("producto", modificar, "codigo="+codigo,null);
+           Toast.makeText(this,"El registro fue modificado",Toast.LENGTH_LONG).show();
+           base.close();
+       } else{
+           Toast.makeText(this,"Debes llenar los campos",Toast.LENGTH_LONG).show();
+       }
+
+   }
+    public void eliminar(View v){
+        Admindb admin= new Admindb(this,"Productos",null,1);
+        SQLiteDatabase base=admin.getWritableDatabase();
+
+        String codigo=edcodigo.getText().toString();
+        if(!codigo.isEmpty()){
+            base.delete(this, "codigo="+codigo,null);
+            base.close();
+            Toast.makeText(this,"Se elimino el registro",Toast.LENGTH_LONG).show();
+            edcodigo.setText("");
+            ednombre.setText("");
+            edprecio.setText("");
+        } else{
+            Toast.makeText(this,"Debes ingresar un código de producto",Toast.LENGTH_LONG).show();
+        }
+    }
